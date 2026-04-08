@@ -1,243 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Baby!</title>
-    <!-- Importing a cute font from Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
-    <style>
-        /* --- THE CUTE STYLES --- */
-        body {
-            background-color: #ffe6e9; /* Soft Pink */
-            font-family: 'Quicksand', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            color: #5a4a4a;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoDeal — Car Sales</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        h1, h2, .countdown {
-            font-family: 'Pacifico', cursive;
-        }
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+  }
 
-        /* Floating Hearts Animation */
-        .heart {
-            position: absolute;
-            color: #ff6b81;
-            font-size: 20px;
-            animation: floatUp 5s linear infinite;
-            opacity: 0;
-            z-index: -1;
-        }
+  /* NAV */
+  nav {
+    background: #1a1a2e;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo { color: #e8b84b; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    background: #e8b84b;
+    color: #1a1a2e;
+  }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
 
-        /* Main Container */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
+  /* ===== HOME ===== */
+  .hero {
+    background: #1a1a2e;
+    color: white;
+    text-align: center;
+    padding: 80px 40px;
+  }
+  .hero h1 { font-size: 42px; margin-bottom: 16px; }
+  .hero h1 span { color: #e8b84b; }
+  .hero p { font-size: 17px; color: #aaa; margin-bottom: 32px; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-gold {
+    background: #e8b84b;
+    color: #1a1a2e;
+    border: none;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .btn-gold:hover { background: #d4a335; }
 
-        /* Hero Section */
-        header {
-            padding: 50px 0;
-        }
-        
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px #fff;
-        }
+  /* Stats */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    background: #16213e;
+    padding: 28px 40px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 28px; font-weight: bold; color: #e8b84b; }
+  .stat-label { font-size: 13px; color: #aaa; margin-top: 4px; }
 
-        /* Countdown Timer */
-        .countdown {
-            font-size: 1.5rem;
-            background: white;
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
+  /* Cars */
+  .section { padding: 60px 40px; }
+  .section h2 { font-size: 26px; margin-bottom: 8px; }
+  .section-sub { color: #888; margin-bottom: 32px; font-size: 14px; }
+  .divider { width: 50px; height: 3px; background: #e8b84b; margin-bottom: 32px; }
 
-        /* Letter Section */
-        .letter {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 50px;
-            line-height: 1.6;
-            font-size: 1.1rem;
-            position: relative;
-        }
-        
-        .letter::before {
-            content: "❤️";
-            font-size: 2rem;
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffe6e9;
-            padding: 0 10px;
-        }
+  .cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .car-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .car-img {
+    background: #e9ecef;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .car-img img { width: 100%; height: 100%; object-fit: cover; }
+  .car-body { padding: 18px; }
+  .car-brand { font-size: 12px; color: #e8b84b; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+  .car-name { font-size: 20px; font-weight: bold; margin: 4px 0 8px; }
+  .car-specs { font-size: 13px; color: #888; margin-bottom: 14px; }
+  .car-footer { display: flex; align-items: center; justify-content: space-between; }
+  .car-price { font-size: 22px; font-weight: bold; color: #1a1a2e; }
 
-        /* Photo Gallery (Polaroid Style) */
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
+  /* ===== INFO PAGE ===== */
+  .info-hero {
+    background: #1a1a2e;
+    color: white;
+    padding: 60px 40px;
+  }
+  .info-hero h1 { font-size: 34px; margin-bottom: 12px; }
+  .info-hero h1 span { color: #e8b84b; }
+  .info-hero p { color: #aaa; font-size: 16px; max-width: 560px; }
 
-        .polaroid {
-            background: white;
-            padding: 10px 10px 30px 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transform: rotate(-2deg);
-            transition: transform 0.3s;
-            width: 200px;
-        }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 60px 40px;
+    background: white;
+  }
+  .feature-box {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 28px 22px;
+    background: #fafafa;
+  }
+  .feature-icon { font-size: 32px; margin-bottom: 12px; }
+  .feature-box h3 { font-size: 17px; margin-bottom: 8px; color: #1a1a2e; }
+  .feature-box p { font-size: 14px; color: #666; line-height: 1.6; }
 
-        .polaroid:nth-child(even) {
-            transform: rotate(2deg);
-        }
+  /* FOOTER */
+  footer {
+    background: #1a1a2e;
+    color: #aaa;
+    text-align: center;
+    padding: 24px;
+    font-size: 13px;
+  }
+  footer span { color: #e8b84b; }
 
-        .polaroid:hover {
-            transform: scale(1.05) rotate(0);
-            z-index: 10;
-        }
-
-        .polaroid img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .caption {
-            font-family: 'Pacifico', cursive;
-            color: #888;
-            margin-top: 10px;
-        }
-
-        footer {
-            margin-top: 50px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-    </style>
+  @media (max-width: 800px) {
+    nav { padding: 14px 20px; }
+    .hero, .section, .info-hero, .features { padding-left: 20px; padding-right: 20px; }
+    .stats { gap: 24px; }
+  }
+</style>
 </head>
 <body>
 
-    <!-- JS will insert hearts here -->
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">🚗 AutoDeal</div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('info')" id="nav-info">Info</a></li>
+  </ul>
+</nav>
 
-    <div class="container">
-        
-        <!-- 1. HERO SECTION -->
-        <header>
-            <h1>Happy Birthday!</h1>
-            <p>To the most beautiful person in the world.</p>
-            
-            <!-- Countdown Timer -->
-            <div class="countdown" id="countdown">Loading...</div>
-        </header>
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
 
-        <!-- 2. THE LOVE LETTER -->
-        <section class="letter">
-            <h2>A Note for You</h2>
-            <p>
-                Hey My dear world,<br><br>
-                23rd feb a veryyy imp day for me because a verry special person was born a person who is like angel ur the best women on thw earth after my Ammi really you r so mashallah really yaar ur jus a perfect girl in my life i cant imagine my life without you ur the ans of duas ur the gift from my lord ur just perfect samrah tera jasa koi nahi ho sakta ek shyri lhki ha aap ka lia uk na i love to do shyri specially on you so hear it is "HAM DUNIYAN MAI HAMSAFAR KI DUA KAR RAHE THA KHUDA NA HAMA FARYSHTA SA NAWAZ DIYA NA JANA HAM NA KYA ASA KAAM KIA KI HAMA TUM SA NAWAAZ DIA "wo kehta hai uppar wala na badi fursat sa banaya hai tumha itna acha dil itna Zada husssn MASHAAALH and yes I LOVEEEEEEEEEEEE YOUUUUUUUU!!!!!!!
-<br><br>
-                I hope you like this little website I coded for you!<br><br>
-                I love you more than biryani 🍗<br>
-                - YOUR JAFFY
-            </p>
-        </section>
+  <div class="hero">
+    <h1>Find Your <span>Dream Car</span></h1>
+    <p>Pune's trusted car dealership — premium cars at honest prices.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="showPage('info')">Browse Cars</button>
+    </div>
+  </div>
 
-        <!-- 3. PHOTO GALLERY -->
-        <section class="gallery">
-            <!-- REPLACE 'YOUR_PHOTO.jpg' WITH YOUR ACTUAL IMAGE FILES -->
-            
-            <div class="polaroid">
-                <img src="s.jpeg" alt="Us">
-                <div class="caption">my world </div>
-            </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">240+</div><div class="stat-label">Cars Sold</div></div>
+    <div class="stat"><div class="stat-num">18</div><div class="stat-label">Brands</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Verified</div></div>
+    <div class="stat"><div class="stat-num">5 ★</div><div class="stat-label">Rating</div></div>
+  </div>
 
-            <div class="polaroid">
-                <img src="j.jpeg" alt="Us">
-                <div class="caption">best girl on the planet</div>
-            </div>
+  <div class="section" style="background: white;">
+    <h2>Featured Cars</h2>
+    <div class="section-sub">Hand-picked premium vehicles</div>
+    <div class="divider"></div>
+    <div class="cars-grid">
 
-            <div class="polaroid">
-                <img src="g.jpeg" alt="Her">
-                <div class="caption">My favorite person</div>
-            </div>
-            
-            <!-- Add more polaroids as needed -->
-        </section>
+      <div class="car-card">
+        <div class="car-img"><img src="A.jpg" alt="Porsche 911"></div>
+        <div class="car-body">
+          <div class="car-brand">Porsche</div>
+          <div class="car-name">911 Carrera S</div>
+          <div class="car-specs">450 BHP &nbsp;|&nbsp; 3.0s 0-100 &nbsp;|&nbsp; 2024</div>
+          <div class="car-footer">
+            <div class="car-price">₹1.82 Cr</div>
+          </div>
+        </div>
+      </div>
 
-        <footer>
-            Made with ❤️ by your BANDAR 
-        </footer>
+      <div class="car-card">
+        <div class="car-img"><img src="b2.webp" alt="BMW M5"></div>
+        <div class="car-body">
+          <div class="car-brand">BMW</div>
+          <div class="car-name">M5 Competition</div>
+          <div class="car-specs">625 BHP &nbsp;|&nbsp; 3.3s 0-100 &nbsp;|&nbsp; 2023</div>
+          <div class="car-footer">
+            <div class="car-price">₹1.55 Cr</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card">
+        <div class="car-img"><img src="c.jpg" alt="Mercedes AMG"></div>
+        <div class="car-body">
+          <div class="car-brand">Mercedes</div>
+          <div class="car-name">AMG GT 63</div>
+          <div class="car-specs">585 BHP &nbsp;|&nbsp; 3.2s 0-100 &nbsp;|&nbsp; 2024</div>
+          <div class="car-footer">
+            <div class="car-price">₹2.10 Cr</div>
+          </div>
+        </div>
+      </div>
 
     </div>
+  </div>
 
-    <script>
-        // --- 1. COUNTDOWN TIMER SCRIPT ---
-        // Set the date we're counting down to (Change the date here)
-        const birthday = new Date("Oct 25, 2024 00:00:00").getTime();
+</div>
 
-        const x = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = birthday - now;
+<!-- ===== INFO PAGE ===== -->
+<div class="page" id="page-info">
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  <div class="info-hero">
+    <h1>About <span>AutoDeal</span></h1>
+    <p>We are Pune's most trusted car dealership since 2016 — matching the right car to the right person.</p>
+  </div>
 
-            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m ";
+  <div class="features">
+    <div class="feature-box">
+      <div class="feature-icon">🔍</div>
+      <h3>150-Point Inspection</h3>
+      <p>Every car is thoroughly checked before it reaches our showroom. Quality is never compromised.</p>
+    </div>
+    <div class="feature-box">
+      <div class="feature-icon">📜</div>
+      <h3>Clear Documentation</h3>
+      <p>Full paperwork, RC transfer, insurance and loan assistance — we handle it all.</p>
+    </div>
+    <div class="feature-box">
+      <div class="feature-icon">🤝</div>
+      <h3>Honest Pricing</h3>
+      <p>No hidden charges. No pressure. Just fair deals and transparent pricing.</p>
+    </div>
+    <div class="feature-box">
+      <div class="feature-icon">🚘</div>
+      <h3>Test Drive Anytime</h3>
+      <p>Book a test drive easily. We can come to you or you can visit our Khondhwa NIBM showroom.</p>
+    </div>
+  </div>
 
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "HAPPY BIRTHDAY! 🎉";
-            }
-        }, 1000);
+</div>
 
-        // --- 2. FLOATING HEARTS SCRIPT ---
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            
-            // Random positioning
-            heart.style.left = Math.random() * 100 + 'vw';
-            
-            // Random animation speed
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-            
-            // Random size
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            
-            document.body.appendChild(heart);
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 <span>AutoDeal</span> — Khondhwa NIBM, Pune &nbsp;|&nbsp; All rights reserved.
+</footer>
 
-            // Remove heart after animation to keep page clean
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
 
-        // Create a heart every 500 milliseconds
-        setInterval(createHeart, 500);
-
-    </script>
 </body>
 </html>
